@@ -1,0 +1,6 @@
+mainnet
+nginx
+nginx-proxy
+entrypoint.sh
+*.log
+testdata

@@ -1,0 +1,63 @@
+version: "3.8"
+services:
+
+  daemon:
+    container_name: daemon
+    build:
+      context: ./dero_daemon
+      dockerfile: Dockerfile
+    command: ./derod-linux-amd64 --data-dir ./testdata --rpc-bind 0.0.0.0:20209 &
+    ports:
+      - "20209:20209"
+
+
+  daemon_wallet:
+    container_name: daemon_wallet
+    build:
+      context: ./dero_wallet
+      dockerfile: Dockerfile
+    command: ./dero-wallet-cli-linux-amd64 --wallet-file ./wallet.db --password "" --unlocked --daemon-address derodaemon:20209 --rpc-server --rpc-bind 0.0.0.0:20206 &
+    ports:
+      - "20206:20206"
+    links:
+      - "daemon:derodaemon"
+    depends_on:
+      - daemon
+
+
+  # nginx-proxy:
+  # nginx:
+  #   build: ./nginx
+  #   # build: ./nginx-proxy
+  #   # container_name: nginx
+  #   restart: always
+    # ports:
+    #   - "20209:20209"
+    # environment:
+    #   - JSONRPC_PROXY_PORT=20209
+    #   - JSONRPC_PROXY_BACKEND=daemon:20209
+    #   - JSONRPC_PROXY_WHITELIST=json_rpc,get_info,getheight,getblockcount
+    #   - JSONRPC_PROXY_DEFAULT_METHOD=get_info
+
+  # proxy:
+    # image: bedeabza/nginx-jsonrpc-proxy
+    # depends_on:
+    #   - daemon
+    # ports:
+    #   - "20209:20209"
+    # environment:
+    #   - JSONRPC_PROXY_PORT=20209
+    #   - JSONRPC_PROXY_BACKEND=daemon:20209
+    #   - JSONRPC_PROXY_WHITELIST=json_rpc,get_info,getheight,getblockcount
+    #   - JSONRPC_PROXY_DEFAULT_METHOD=json_rpc
+    #   # - JSONRPC_PROXY_WHITELIST=get_info,getheight,getblockcount
+    #   # - JSONRPC_PROXY_DEFAULT_METHOD=get_info
+    #   # - JSONRPC_PROXY_AUTHORIZATION=Basic dXNlcjpwYXNzd29yZA==
+
+
+  # nginx:
+  #   build: ./nginx
+  #   container_name: nginx
+  #   restart: always
+  #   ports:
+  #     - "20209:20209"
