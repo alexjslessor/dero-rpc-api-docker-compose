@@ -1,12 +1,6 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/arta.min.css">
-
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script> -->
-
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/languages/python.min.js"></script> -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/languages/bash.min.js"></script>
 
 
+![](./future1.png)
 # Overview
 
 This is a dockerized Dero wallet and daemon. This docker-compose configuration exposes the RPC api as specified in the .pdf document also contained in this repository.
